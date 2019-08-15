@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>thymeleaf</title>
+</head>
+<body>
+<!-- /*/
+        如果没有是哦那个thymeleaf模板引擎，看不到该注释，如果使用了，可以看到注释
+/*/ -->
+    <!--
+        th:text : 替换掉text属性的值，替换掉标签的内容
+                  当我们当作html打开时，看到的是我是div
+                  当thymeleaf打开时，看到的是${title}的值
+    -->
+    <!--
+        th:属性名   替换掉对应的属性值
+    -->
+<div th:text="${title}">我是div</div>
+<div th:utext="${title}"></div>
+<div style="background-color: red;height: 200px" th:style="'background-color:'+${color}+';height:'+${height}"></div>
+    <!-- th:attr  可以一次添加替换多个属性，用逗号隔开-->
+<div th:attr="id=5">aaaa</div>
+    <!--@{相对路径} ： 一般是使用在link或者href中，作为url来使用-->
+<a th:href="@{http://www.baidu.com}">百度</a>
+    <!--
+       # 的用法  ：
+         1. #{国际化属性文件中的属性名}，获取对应语言的值
+         2.获取内置对象
+    -->
+<h1 th:text="${#request.getAttribute('title')}"></h1>
+<h1 th:text="${#request.getParameter('name')}"></h1>
+<h1 th:text="${param.name}"></h1>
+    <!--
+        if和unless联合使用，给相同的条件，如果if的条件满足
+        只显示if的标签，不显示unless；如果if的条件不满足
+        显示unless的标签
+    -->
+<h1 th:if="${#request.getAttribute('sex')} eq '男' ">男</h1>
+<h1 th:if="${#request.getAttribute('sex')} eq '女' ">女</h1>
+
+
+
+    <!--switch-->
+    <div th:switch="${sex}">
+        <h1 th:case="男">男</h1>
+        <h1 th:case="女">女</h1>
+    </div>
+
+
+<div th:each="student : ${students}">
+    <div>
+        name: <span th:text="${student.name}"></span>
+
+        id: <span th:text="${student.id}"></span>
+    </div>
+</div>
+
+<div th:each="item : ${map}">
+    <div>
+        <span th:text="${item.key}"></span>
+        <span th:text="${item.value}"></span>
+    </div>
+</div>
+</body>
+</html>
